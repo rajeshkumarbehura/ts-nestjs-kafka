@@ -15,6 +15,9 @@ This example built on
 
 It integrates with kafkajs and simplified to subscribe and publish message to kafka topics.
 
+Find more in -
+https://dev.to/rajeshkumarbehura/kafkajs-nestjs-with-typescript-simplified-example-35ep
+
 ## Installation
 
 ```bash
@@ -22,6 +25,13 @@ $ yarn install
 ```
 
 ## Running the app
+
+Make sure docker & docker-compose is installed. 
+
+```
+# Inside the docker folder 
+$ docker-compose -f kafka.yml up
+```
 
 ```bash
 # development
