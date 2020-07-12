@@ -15,7 +15,7 @@ export class DefaultService {
 
   async send() {
     const message = {
-      value: 'hello world',
+      value: 'Message send to Kakfa Topic',
     };
     const payload: KafkaPayload = {
       messageId: '' + new Date().valueOf(),
@@ -30,7 +30,7 @@ export class DefaultService {
 
   async sendToFixedConsumer() {
     const message = {
-      value: 'hello fixed world',
+      value: 'Message send to Kakfa Topic',
     };
     const payload: KafkaPayload = {
       messageId: '' + new Date().valueOf(),

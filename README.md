@@ -26,30 +26,42 @@ $ yarn install
 
 ## Running the app
 
+#### Step- 1 
 Make sure docker & docker-compose is installed. 
 
 ```
-# Inside the docker folder 
+# Run kafka server in local machine, go to docker folder 
 $ docker-compose -f kafka.yml up
 ```
 
+```
+# To run kafka drop UI to monitor kafka in local machine, go to docker folder 
+$ docker-compose -f kafka-drop-ui.yml up
+
+```
+After running Kafka Server & Kafka Drop UI successuflly, access kafka-drop monitoring UI
+http://localhost:9000
+
+More on kafka drop Application - 
+https://github.com/obsidiandynamics/kafdrop
+https://raw.githubusercontent.com/obsidiandynamics/kafdrop/master/docs/images/overview.png
+
+#### Step- 2
+ Run the application
 ```bash
 # development
 $ yarn start
 
 ```
 
+#### Step- 3
+Send message to Kafka & receive message by consumer testing.
+1.  http://localhost:3000/send/consumer   - send a sample message to kafka & consumer receives and print in application log
+2.  http://localhost:3000/send/fixed-consumer
 
-## Support
+When you call above api, application console log will print " [KAKFA-CONSUMER] ...." .
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
-
-  Nest is [MIT licensed](LICENSE).
+Nest is [MIT licensed](LICENSE).

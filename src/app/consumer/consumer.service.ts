@@ -17,7 +17,7 @@ export class ConsumerService extends AbstractKafkaConsumer {
      */
     @SubscribeTo('hello.topic')
     helloSubscriber(payload: KafkaPayload) {
-        console.log('Print message after receiving', payload);
+        console.log('[KAKFA-CONSUMER] Print message after receiving', payload);
     }
 
     /**
@@ -27,6 +27,6 @@ export class ConsumerService extends AbstractKafkaConsumer {
      */
     @SubscribeToFixedGroup(HELLO_FIXED_TOPIC)
     helloSubscriberToFixedGroup(payload: KafkaPayload) {
-        console.log('Print message after receiving for fixed group', payload);
+        console.log('[KAKFA-CONSUMER] Print message after receiving for fixed group', payload);
     }
 }
