@@ -6,6 +6,7 @@ export function SubscribeTo(topic) {
   return (target, propertyKey, descriptor) => {
     const originalMethod = target[propertyKey];
     SUBSCRIBER_FN_REF_MAP.set(topic, originalMethod);
+    SUBSCRIBER_OBJ_REF_MAP.set(topic, target);
     return descriptor;
   };
 }
@@ -13,6 +14,7 @@ export function SubscribeToFixedGroup(topic) {
   return (target, propertyKey, descriptor) => {
     const originalMethod = target[propertyKey];
     SUBSCRIBER_FIXED_FN_REF_MAP.set(topic, originalMethod);
+    SUBSCRIBER_OBJ_REF_MAP.set(topic, target);
     return descriptor;
   };
 }

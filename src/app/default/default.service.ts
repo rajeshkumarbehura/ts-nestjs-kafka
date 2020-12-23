@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { KafkaService } from '../common/kafka/kafka.service';
 import { KafkaPayload } from '../common/kafka/kafka.message';
-import {HELLO_FIXED_TOPIC} from "../constant";
+import { HELLO_FIXED_TOPIC } from '../constant';
 
 @Injectable()
 export class DefaultService {
@@ -38,7 +38,10 @@ export class DefaultService {
       messageType: 'Say.Hello',
       topicName: HELLO_FIXED_TOPIC, // topic name could be any name
     };
-    const value = await this.kafkaService.sendMessage(HELLO_FIXED_TOPIC, payload);
+    const value = await this.kafkaService.sendMessage(
+      HELLO_FIXED_TOPIC,
+      payload,
+    );
     console.log('kafka status ', value);
     return message;
   }

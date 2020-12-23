@@ -32,11 +32,31 @@ export class KafkaService implements OnModuleInit, OnModuleDestroy {
   async onModuleInit(): Promise<void> {
     await this.connect();
     SUBSCRIBER_FN_REF_MAP.forEach((functionRef, topic) => {
+      // attach the function with kafka topic name
       this.bindAllTopicToConsumer(functionRef, topic);
     });
 
     SUBSCRIBER_FIXED_FN_REF_MAP.forEach((functionRef, topic) => {
+      // attach the function with kafka topic name
       this.bindAllTopicToFixedConsumer(functionRef, topic);
+    });
+
+    await this.fixedConsumer.run({
+      eachMessage: async ({ topic, partition, message }) => {
+        const functionRef = SUBSCRIBER_FIXED_FN_REF_MAP.get(topic);
+        const object = SUBSCRIBER_OBJ_REF_MAP.get(topic);
+        // bind the subscribed functions to topic
+        await functionRef.apply(object, [message.value.toString()]);
+      },
+    });
+
+    await this.consumer.run({
+      eachMessage: async ({ topic, partition, message }) => {
+        const functionRef = SUBSCRIBER_FN_REF_MAP.get(topic);
+        const object = SUBSCRIBER_OBJ_REF_MAP.get(topic);
+        // bind the subscribed functions to topic
+        await functionRef.apply(object, [message.value.toString()]);
+      },
     });
   }
 
@@ -58,26 +78,10 @@ export class KafkaService implements OnModuleInit, OnModuleDestroy {
 
   async bindAllTopicToConsumer(callback, _topic) {
     await this.consumer.subscribe({ topic: _topic, fromBeginning: false });
-    await this.consumer.run({
-      eachMessage: async ({ topic, partition, message }) => {
-        const functionRef = SUBSCRIBER_FN_REF_MAP.get(topic);
-        const object = SUBSCRIBER_OBJ_REF_MAP.get(topic);
-        // bind the subscribed functions to topic
-        await functionRef.apply(object, [message.value.toString()]);
-      },
-    });
   }
 
   async bindAllTopicToFixedConsumer(callback, _topic) {
     await this.fixedConsumer.subscribe({ topic: _topic, fromBeginning: false });
-    await this.fixedConsumer.run({
-      eachMessage: async ({ topic, partition, message }) => {
-        const functionRef = SUBSCRIBER_FIXED_FN_REF_MAP.get(topic);
-        const object = SUBSCRIBER_OBJ_REF_MAP.get(topic);
-        // bind the subscribed functions to topic
-        await functionRef.apply(object, [message.value.toString()]);
-      },
-    });
   }
 
   async sendMessage(kafkaTopic: string, kafkaMessage: KafkaPayload) {

@@ -1,6 +1,6 @@
 {
   "name": "ts-nestjs-kafka",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "<p align=\"center\">   <a href=\"http://nestjs.com/\" target=\"blank\"><img src=\"https://nestjs.com/img/logo_text.svg\" width=\"320\" alt=\"Nest Logo\" /></a> </p>",
   "author": "",
   "license": "MIT",
